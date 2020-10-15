@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Connecting to ARCHER2 &mdash; ARCHER2 0.4beta documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data management and transfer" href="data.html" />
+    <link rel="prev" title="Overview" href="overview.html" />
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165933823-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165933823-2');
+</script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ARCHER2
+          
+
+          
+            
+            <img src="../_static/archer2_white_transparent.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/quickstart-users.html">Quickstart for users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/quickstart-developers.html">Quickstart for developers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User and best practice guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Connecting to ARCHER2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#access-credentials">Access credentials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-key-pairs">SSH Key Pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upload-public-part-of-key-pair-to-safe">Upload public part of key pair to SAFE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#initial-passwords">Initial passwords</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-clients">SSH Clients</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#logging-in-from-linux-and-macos">Logging in from Linux and MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging-in-from-windows-using-mobaxterm">Logging in from Windows using MobaXterm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#making-access-more-convenient-using-the-ssh-configuration-file">Making access more convenient using the SSH configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-debugging-tips">SSH debugging tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#can-you-connect-to-the-login-node">Can you connect to the login node?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-key">SSH key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#password">Password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-verbose-output">SSH verbose output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data management and transfer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sw-environment.html">Software environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scheduler.html">Running jobs on ARCHER2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">I/O and file systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev-environment.html">Application development environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Using Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profile.html">Profiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning.html">Performance tuning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Research software</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/castep/castep.html">CASTEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/chemshell/chemshell.html">ChemShell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/code-saturne/code-saturne.html">Code Saturne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/cp2k/cp2k.html">CP2K</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/elk/elk.html">ELK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/fenics/fenics.html">FEniCS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/gromacs/gromacs.html">GROMACS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/lammps/lammps.html">LAMMPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/mitgcm/mitgcm.html">MITgcm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/mo-unified-model/mo-unified-model.html">Met Office Unified Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/namd/namd.html">NAMD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/nemo/nemo.html">NEMO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/nwchem/nwchem.html">NWChem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/onetep/onetep.html">ONETEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/openfoam/openfoam.html">OpenFOAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/qe/qe.html">Quantum Espresso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../research-software/vasp/vasp.html">VASP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Software libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../software-libraries/overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data analysis and tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-tools/overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Essential skills</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../essentials/overview.html">Overview</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ARCHER2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Connecting to ARCHER2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/archer2-hpc/archer2-docs/blob/master/user-guide/connecting.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="connecting-to-archer2">
+<h1>Connecting to ARCHER2<a class="headerlink" href="#connecting-to-archer2" title="Permalink to this headline">¶</a></h1>
+<p>On the ARCHER2 system, interactive access can be achieved via SSH, either
+directly from a command line terminal or using an SSH client. In
+addition data can be transferred to and from the ARCHER2 system using
+<code class="docutils literal notranslate"><span class="pre">scp</span></code> from the command line or by using a file transfer client.</p>
+<p>This section covers the basic connection methods.</p>
+<p>Before following the process below, we assume you have setup an account on ARCHER2
+through the EPCC SAFE. Documentation on how to do this can be found at:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://epcced.github.io/safe-docs/safe-for-users/">SAFE Guide for Users</a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="access-credentials">
+<h2>Access credentials<a class="headerlink" href="#access-credentials" title="Permalink to this headline">¶</a></h2>
+<p>To access ARCHER2, you need to use two credentials: your password <strong>and</strong> an SSH
+key pair protected by a passphrase. You can find more detailed instructions on
+how to set up your credentials to access ARCHER2 from Windows, macOS and Linux
+below.</p>
+<div class="section" id="ssh-key-pairs">
+<h3>SSH Key Pairs<a class="headerlink" href="#ssh-key-pairs" title="Permalink to this headline">¶</a></h3>
+<p>You will need to generate an SSH key pair protected by a passphrase to access
+ARCHER2.</p>
+<p>Using a terminal (the command line), set up a key pair that contains
+your e-mail address and enter a passphrase you will use to unlock the
+key:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh-keygen -t rsa -C &quot;your@email.com&quot;
+...
+-bash-4.1$ ssh-keygen -t rsa -C &quot;your@email.com&quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Home/user/.ssh/id_rsa): [Enter]
+Enter passphrase (empty for no passphrase): [Passphrase]
+Enter same passphrase again: [Passphrase]
+Your identification has been saved in /Home/user/.ssh/id_rsa.
+Your public key has been saved in /Home/user/.ssh/id_rsa.pub.
+The key fingerprint is:
+03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.com
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+|    . ...+o++++. |
+| . . . =o..      |
+|+ . . .......o o |
+|oE .   .         |
+|o =     .   S    |
+|.    +.+     .   |
+|.  oo            |
+|.  .             |
+| ..              |
++-----------------+
+</pre></div>
+</div>
+<p>(remember to replace “<a class="reference external" href="mailto:your&#37;&#52;&#48;email&#46;com">your<span>&#64;</span>email<span>&#46;</span>com</a>” with your e-mail address).</p>
+</div>
+<div class="section" id="upload-public-part-of-key-pair-to-safe">
+<h3>Upload public part of key pair to SAFE<a class="headerlink" href="#upload-public-part-of-key-pair-to-safe" title="Permalink to this headline">¶</a></h3>
+<p>You should now upload the public part of your SSH key pair to the SAFE by following the instructions at:</p>
+<p><a class="reference external" href="https://safe.epcc.ed.ac.uk">Login to SAFE</a>. Then:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Go to the Menu <em>Login accounts</em> and select the ARCHER2 account you want to add the SSH key to</li>
+<li>On the subsequent Login account details page click the <em>Add Credential</em> button</li>
+<li>Select <em>SSH public key</em> as the Credential Type and click <em>Next</em></li>
+<li>Either copy and paste the public part of your SSH key into the <em>SSH Public key</em> box or use the button to select the public key file on your computer.</li>
+<li>Click <em>Add</em> to associate the public SSH key part with your account</li>
+</ol>
+</div></blockquote>
+<p>Once you have done this, your SSH key will be added to your ARCHER2 account.</p>
+<p>Remember, you will need to use both an SSH key and password to log into ARCHER2 so you will
+also need to collect your initial password before you can log into ARCHER2. We cover this next.</p>
+</div>
+<div class="section" id="initial-passwords">
+<h3>Initial passwords<a class="headerlink" href="#initial-passwords" title="Permalink to this headline">¶</a></h3>
+<p>The SAFE web interface is used to provide your initial password for
+logging onto ARCHER2 (see the <a class="reference external" href="https://epcced.github.io/safe-docs">SAFE Documentation</a>
+for more details on requesting accounts and picking up passwords).</p>
+<p><strong>Note:</strong> you may now change your password on the ARCHER2 machine itself
+using the <em>passwd</em> command or when you are prompted the first time you login.
+This change will not be reflected in the SAFE. If you forget your password,
+you should use the SAFE to request a new one-shot password.</p>
+</div>
+</div>
+<div class="section" id="ssh-clients">
+<h2>SSH Clients<a class="headerlink" href="#ssh-clients" title="Permalink to this headline">¶</a></h2>
+<p>Interaction with ARCHER2 is done remotely, over an encrypted
+communication channel, Secure Shell version 2 (SSH-2). This allows
+command-line access to one of the login nodes of a ARCHER2, from which
+you can run commands or use a command-line text editor to edit files.
+SSH can also be used to run graphical programs such as GUI text editors
+and debuggers when used in conjunction with an X client.</p>
+<div class="section" id="logging-in-from-linux-and-macos">
+<h3>Logging in from Linux and MacOS<a class="headerlink" href="#logging-in-from-linux-and-macos" title="Permalink to this headline">¶</a></h3>
+<p>Linux distributions and MacOS each come installed with a terminal
+application that can be use for SSH access to the login nodes. Linux
+users will have different terminals depending on their distribution and
+window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult
+your Linux distribution’s documentation for details on how to load a
+terminal.</p>
+<p>MacOS users can use the Terminal application, located in the Utilities
+folder within the Applications folder.</p>
+<p>You can use the following command from the terminal window to login into
+ARCHER2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">username</span><span class="nd">@login</span><span class="o">.</span><span class="n">archer2</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span>
+</pre></div>
+</div>
+<p>You will first be prompted for the passphrase associated with your
+SSH key pair. Once you have entered your passphrase successfully, you
+will then be prompted for your password. You need to enter both
+correctly to be able to access ARCHER2.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your SSH key pair is not stored in the default location (usually
+<code class="docutils literal notranslate"><span class="pre">~/.ssh/id_rsa</span></code>) on your local system, you may need to specify the
+path to the private part of the key wih the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option to <code class="docutils literal notranslate"><span class="pre">ssh</span></code>.
+For example, if your key is in a file called <code class="docutils literal notranslate"><span class="pre">keys/id_rsa_ARCHER2</span></code>
+you would use the command
+<code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-i</span> <span class="pre">keys/id_rsa_ARCHER2</span> <span class="pre">username&#64;login.archer2.ac.uk</span></code>
+to log in.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>When you first log into ARCHER2, you will be prompted to change your
+initial password. This is a three step process:</p>
+<ol class="arabic simple">
+<li>When promoted to enter your <em>ldap password</em>: Re-enter the password you retrieved from SAFE</li>
+<li>When prompted to enter your new password: type in a new password</li>
+<li>When prompted to re-enter the new password: re-enter the new password</li>
+</ol>
+<p class="last">Your password has now been changed</p>
+</div>
+<p>To allow remote programs, especially graphical applications to control
+your local display, such as being able to open up a new GUI window (such
+as for a debugger), use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">X</span> <span class="n">username</span><span class="nd">@login</span><span class="o">.</span><span class="n">archer2</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span>
+</pre></div>
+</div>
+<p>Some sites recommend using the <code class="docutils literal notranslate"><span class="pre">-Y</span></code> flag. While this can fix some
+compatibility issues, the <code class="docutils literal notranslate"><span class="pre">-X</span></code> flag is more secure.</p>
+<p>Current MacOS systems do not have an X window system. Users should
+install the XQuartz package to allow for SSH with X11 forwarding on MacOS
+systems:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.xquartz.org/">XQuartz website</a></li>
+</ul>
+</div>
+<div class="section" id="logging-in-from-windows-using-mobaxterm">
+<h3>Logging in from Windows using MobaXterm<a class="headerlink" href="#logging-in-from-windows-using-mobaxterm" title="Permalink to this headline">¶</a></h3>
+<p>A typical Windows installation will not include a terminal client,
+though there are various clients available. We recommend all our Windows
+users to download and install MobaXterm to access ARCHER2. It is very
+easy to use and includes an integrated X server with SSH client to run
+any graphical applications on ARCHER2.</p>
+<p>You can download MobaXterm Home Edition (Installer Edition) from the
+following link:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://mobaxterm.mobatek.net/download-home-edition.html">Install MobaXterm</a></li>
+</ul>
+<p>Double-click the downloaded Microsoft Installer file (.msi), and the
+Windows wizard will automatically guides you through the installation
+process. Note, you might need to have administrator rights to install on
+some Windows OS. Also make sure to check whether Windows Firewall hasn’t
+blocked any features of this program after installation.</p>
+<p>Start MobaXterm using, for example, the icon added to the Start menu
+during the installation process. Use your ARCHER2 username, the login
+host should be set to <code class="docutils literal notranslate"><span class="pre">login.archer2.ac.uk</span></code>.</p>
+<p>If you would like to run any small remote GUI applications, then make
+sure to use -X option along with the ssh command (see above) to enable
+X11 forwarding, which allows you to run graphical clients on your local
+X server.</p>
+</div>
+</div>
+<div class="section" id="making-access-more-convenient-using-the-ssh-configuration-file">
+<h2>Making access more convenient using the SSH configuration file<a class="headerlink" href="#making-access-more-convenient-using-the-ssh-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Typing in the full command to login or transfer data to ARCHER2 can become tedious
+as it often has to be repeated many times. You can use the SSH configuration file,
+usually located on your local machine at <code class="docutils literal notranslate"><span class="pre">.ssh/config</span></code> to make things a bit more
+convenient.</p>
+<p>Each remote site (or group of sites) can have an entry in this file which may look
+something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">archer2</span>
+  <span class="n">HostName</span> <span class="n">login</span><span class="o">.</span><span class="n">archer2</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span>
+  <span class="n">User</span> <span class="n">username</span>
+</pre></div>
+</div>
+<p>(remember to replace <code class="docutils literal notranslate"><span class="pre">username</span></code> with your actual username!).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Host</span> <span class="pre">archer2</span></code> line defines a short name for the entry. In this case, instead
+of typing <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">username&#64;login.archer2.ac.uk</span></code> to access the ARCHER2 login nodes,
+you could use <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">archer2</span></code> instead. The remaining lines define the options for the
+<code class="docutils literal notranslate"><span class="pre">archer2</span></code> host.</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Hostname</span> <span class="pre">login.archer2.ac.uk</span></code> - defines the full address of the host</li>
+<li><code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">username</span></code> - defines the username to use by default for this host (replace
+<code class="docutils literal notranslate"><span class="pre">username</span></code> with your own username on the remote host)</li>
+</ul>
+</div></blockquote>
+<p>Now you can use SSH to access ARCHER2 without needing to enter your username or the full
+hostname every time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh archer2
+</pre></div>
+</div>
+<p>You can set up as many of these entries as you need in your local configuration file.
+Other options are available. See the ssh_config man page (or <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">ssh_config</span></code> on any
+machine with SSH installed) for a description of the SSH configuration file. You may
+find the <code class="docutils literal notranslate"><span class="pre">IdentityFile</span></code> option useful if you have to manage multiple SSH key pairs
+for different systems as this allows you to specify which SSH key to use for each
+system.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is a known bug with Windows ssh-agent. If you get the error message: <code class="docutils literal notranslate"><span class="pre">Warning:</span>
+<span class="pre">agent</span> <span class="pre">returned</span> <span class="pre">different</span> <span class="pre">signature</span> <span class="pre">type</span> <span class="pre">ssh-rsa</span> <span class="pre">(expected</span> <span class="pre">rsa-sha2-512)</span></code>, you will
+need to either specify the path to your ssh key in the command line (using the <code class="docutils literal notranslate"><span class="pre">-i</span></code>
+option as described above) or add the path to your SSH config file by using the
+<code class="docutils literal notranslate"><span class="pre">IdentityFile</span></code> option.</p>
+</div>
+</div>
+<div class="section" id="ssh-debugging-tips">
+<h2>SSH debugging tips<a class="headerlink" href="#ssh-debugging-tips" title="Permalink to this headline">¶</a></h2>
+<p>If you find you are unable to connect via SSH there are a number of ways you can
+try and diagnose the issue. Some of these are collected below - if you are
+having difficulties connecting we suggest trying these before contacting the
+ARCHER2 service desk.</p>
+<div class="section" id="can-you-connect-to-the-login-node">
+<h3>Can you connect to the login node?<a class="headerlink" href="#can-you-connect-to-the-login-node" title="Permalink to this headline">¶</a></h3>
+<p>Try the command <code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">-c</span> <span class="pre">3</span> <span class="pre">login.archer2.ac.uk</span></code>. If you successfully connect
+to the login node, the output should include:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">login</span><span class="o">.</span><span class="n">dyn</span><span class="o">.</span><span class="n">archer2</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span> <span class="n">ping</span> <span class="n">statistics</span> <span class="o">---</span>
+<span class="mi">3</span> <span class="n">packets</span> <span class="n">transmitted</span><span class="p">,</span> <span class="mi">3</span> <span class="n">received</span><span class="p">,</span> <span class="mi">0</span><span class="o">%</span> <span class="n">packet</span> <span class="n">loss</span><span class="p">,</span> <span class="n">time</span> <span class="mi">38</span><span class="n">ms</span>
+</pre></div>
+</div>
+<p>(the ping time ‘38ms’ is not important). If not all packets are received
+there could be a problem with your internet connection, or the login node could
+be unavailable.</p>
+</div>
+<div class="section" id="ssh-key">
+<h3>SSH key<a class="headerlink" href="#ssh-key" title="Permalink to this headline">¶</a></h3>
+<p>If you get the error message <code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span> <span class="pre">(publickey)</span></code> this can indicate
+a problem with your SSH key. Some things to check:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Have you uploaded the key to SAFE? Please note that if the same key is
+reuploaded SAFE will not map the “new” key to ARCHER2. If for some reason
+this is required, please delete the key first, then reupload.</p>
+</li>
+<li><p class="first">Is ssh using the correct key? You can check which keys are being found and
+offered by ssh using <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-vvv</span></code>. If your private key has a non-default name
+you can use the <code class="docutils literal notranslate"><span class="pre">-i</span></code> flag to provide it to ssh, i.e. <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-i</span> <span class="pre">path/to/key</span>
+<span class="pre">username&#64;login.archer2.ac.uk</span></code>.</p>
+</li>
+<li><p class="first">Are you entering the passphrase correctly? You will be asked for your private
+key’s passphrase first. If you enter it incorrectly you will usually be asked
+to enter it again, and usually up to three times in total, after which ssh
+will fail with <code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span> <span class="pre">(publickey)</span></code>. If you would like to
+confirm your passphrase without attempting to connect, you can use
+<code class="docutils literal notranslate"><span class="pre">ssh-keygen</span> <span class="pre">-y</span> <span class="pre">-f</span> <span class="pre">/path/to/private/key</span></code>. If successful, this command will
+print the corresponding public key. You can also use this to check it is the
+one uploaded to SAFE.</p>
+</li>
+<li><p class="first">Are permissions correct on the ssh key? One common issue is that the
+permissions are incorrect on the either the key file, or the directory it’s
+contained in. On Linux/MacOS for example, if your private keys are held in
+<code class="docutils literal notranslate"><span class="pre">~/.ssh/</span></code> you can check this with <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-al</span> <span class="pre">~/.ssh</span></code>. This should give
+something similar to the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls -al ~/.ssh/
+drwx------.  2 user group    48 Jul 15 20:24 .
+drwx------. 12 user group  4096 Oct 13 12:11 ..
+-rw-------.  1 user group   113 Jul 15 20:23 authorized_keys
+-rw-------.  1 user group 12686 Jul 15 20:23 id_rsa
+-rw-r--r--.  1 user group  2785 Jul 15 20:23 id_rsa.pub
+-rw-r--r--.  1 user group  1967 Oct 13 14:11 known_hosts
+</pre></div>
+</div>
+<p>The important section here is the string of letters and dashes at the start,
+for the lines ending in <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code>, and <code class="docutils literal notranslate"><span class="pre">id_rsa.pub</span></code>, which indicate
+permissions on the containing directory, private key, and public key
+respectively. If your permissions are not correct, they can be set with
+<code class="docutils literal notranslate"><span class="pre">chmod</span></code>. Consult the table below for the relevant <code class="docutils literal notranslate"><span class="pre">chmod</span></code> command. On
+Windows, permissions are handled differently but can be set by right-clicking
+on the file and selecting Properties &gt; Security &gt; Advanced. The user, SYSTEM,
+and Administrators should have <code class="docutils literal notranslate"><span class="pre">Full</span> <span class="pre">control</span></code>, and no other
+permissions should exist for both public and private key files, and the
+containing folder.</p>
+</li>
+</ul>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Target</th>
+<th class="head">Permissions</th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">chmod</span></code> Code</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Directory</td>
+<td><code class="docutils literal notranslate"><span class="pre">drwx------</span></code></td>
+<td>700</td>
+</tr>
+<tr class="row-odd"><td>Private Key</td>
+<td><code class="docutils literal notranslate"><span class="pre">-rw-------</span></code></td>
+<td>600</td>
+</tr>
+<tr class="row-even"><td>Public Key</td>
+<td><code class="docutils literal notranslate"><span class="pre">-rw-r--r--</span></code></td>
+<td>644</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">chmod</span></code> can be used to set permissions on the target in the following way:
+<code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">&lt;code&gt;</span> <span class="pre">&lt;target&gt;</span></code>. So for example to set correct permissions on the
+private key file <code class="docutils literal notranslate"><span class="pre">id_rsa_ARCHER2</span></code> one would use the command <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">600</span>
+<span class="pre">id_rsa_ARCHER2</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Unix file permissions can be understood in the following way. There are three
+groups that can have file permissions: (owning) <em>users</em>, (owning) <em>groups</em>,
+and <em>others</em>. The available permissions are <em>read</em>, <em>write</em>, and <em>execute</em>.
+The first character indicates whether the target is a file <code class="docutils literal notranslate"><span class="pre">-</span></code>, or directory
+<code class="docutils literal notranslate"><span class="pre">d</span></code>. The next three characters indicate the owning user’s permissions. The
+first character is <code class="docutils literal notranslate"><span class="pre">r</span></code> if they have read permission, <code class="docutils literal notranslate"><span class="pre">-</span></code> if they don’t,
+the second character is <code class="docutils literal notranslate"><span class="pre">w</span></code> if they have write permission, <code class="docutils literal notranslate"><span class="pre">-</span></code> if they
+don’t, the third character is <code class="docutils literal notranslate"><span class="pre">x</span></code> if they have execute permission, <code class="docutils literal notranslate"><span class="pre">-</span></code> if
+they don’t. This pattern is then repeated for <em>group</em>, and <em>other</em>
+permissions. For example the pattern <code class="docutils literal notranslate"><span class="pre">-rw-r--r--</span></code> indicates that the owning
+user can read and write the file, members of the owning group can read it, and
+anyone else can also read it. The <code class="docutils literal notranslate"><span class="pre">chmod</span></code> codes are constructed by treating
+the user, group, and owner permission strings as binary numbers, then
+converting them to decimal. For example the permission string <code class="docutils literal notranslate"><span class="pre">-rwx------</span></code>
+becomes <code class="docutils literal notranslate"><span class="pre">111</span> <span class="pre">000</span> <span class="pre">000</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">700</span></code>.</p>
+</div>
+</div>
+<div class="section" id="password">
+<h3>Password<a class="headerlink" href="#password" title="Permalink to this headline">¶</a></h3>
+<p>If you are having trouble entering your password consider using a password
+manager, from which you can copy and paste it. This will also help you generate
+a secure password. If you need to reset your password, instructions for doing so
+can be found <a class="reference external" href="https://epcced.github.io/safe-docs/safe-for-users/#reset_machine">here</a>.</p>
+<p>Windows users please note that <code class="docutils literal notranslate"><span class="pre">Ctrl+V</span></code> does not work to paste in to PuTTY,
+MobaXterm, or PowerShell. Instead use <code class="docutils literal notranslate"><span class="pre">Shift+Ins</span></code> to paste. Alternatively,
+right-click and select ‘Paste’ in PuTTY and MobaXterm, or simply right-click to
+paste in PowerShell.</p>
+</div>
+<div class="section" id="ssh-verbose-output">
+<h3>SSH verbose output<a class="headerlink" href="#ssh-verbose-output" title="Permalink to this headline">¶</a></h3>
+<p>Verbose debugging output from <code class="docutils literal notranslate"><span class="pre">ssh</span></code> can be very useful for diagnosing the
+issue. In particular, it can be used to distinguish between problems with the
+SSH key and password - further details are given below. To enable verbose output
+add the <code class="docutils literal notranslate"><span class="pre">-vvv</span></code> flag to your SSH command. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">vvv</span> <span class="n">username</span><span class="nd">@login</span><span class="o">.</span><span class="n">archer2</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">uk</span>
+</pre></div>
+</div>
+<p>The output is lengthy, but somewhere in there you should see lines similar to
+the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">debug1</span><span class="p">:</span> <span class="n">Next</span> <span class="n">authentication</span> <span class="n">method</span><span class="p">:</span> <span class="n">publickey</span>
+<span class="n">debug1</span><span class="p">:</span> <span class="n">Offering</span> <span class="n">public</span> <span class="n">key</span><span class="p">:</span> <span class="n">RSA</span> <span class="n">SHA256</span><span class="p">:</span><span class="o">&lt;</span><span class="n">key</span><span class="o">-</span><span class="nb">hash</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">path_to_private_key</span><span class="o">&gt;</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">send_pubkey_test</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">send</span> <span class="n">packet</span><span class="p">:</span> <span class="nb">type</span> <span class="mi">50</span>
+<span class="n">debug2</span><span class="p">:</span> <span class="n">we</span> <span class="n">sent</span> <span class="n">a</span> <span class="n">publickey</span> <span class="n">packet</span><span class="p">,</span> <span class="n">wait</span> <span class="k">for</span> <span class="n">reply</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">receive</span> <span class="n">packet</span><span class="p">:</span> <span class="nb">type</span> <span class="mi">60</span>
+<span class="n">debug1</span><span class="p">:</span> <span class="n">Server</span> <span class="n">accepts</span> <span class="n">key</span><span class="p">:</span> <span class="n">pkalg</span> <span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="n">vlen</span> <span class="mi">2071</span>
+<span class="n">debug2</span><span class="p">:</span> <span class="n">input_userauth_pk_ok</span><span class="p">:</span> <span class="n">fp</span> <span class="n">SHA256</span><span class="p">:</span><span class="o">&lt;</span><span class="n">key</span><span class="o">-</span><span class="nb">hash</span><span class="o">&gt;</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">sign_and_send_pubkey</span><span class="p">:</span> <span class="n">RSA</span> <span class="n">SHA256</span><span class="p">:</span><span class="o">&lt;</span><span class="n">key</span><span class="o">-</span><span class="nb">hash</span><span class="o">&gt;</span>
+<span class="n">Enter</span> <span class="n">passphrase</span> <span class="k">for</span> <span class="n">key</span> <span class="s1">&#39;&lt;path_to_private_key&gt;&#39;</span><span class="p">:</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">send</span> <span class="n">packet</span><span class="p">:</span> <span class="nb">type</span> <span class="mi">50</span>
+<span class="n">debug3</span><span class="p">:</span> <span class="n">receive</span> <span class="n">packet</span><span class="p">:</span> <span class="nb">type</span> <span class="mi">51</span>
+<span class="n">Authenticated</span> <span class="k">with</span> <span class="n">partial</span> <span class="n">success</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Most importantly, you can see which files ssh has checked for private keys, and
+you can see if any key is accepted. The line <code class="docutils literal notranslate"><span class="pre">Authenticated</span> <span class="pre">with</span> <span class="pre">partial</span>
+<span class="pre">success</span></code> indicates that the SSH key has been accepted, and you will next be
+asked for your password. By default ssh will go through a list of standard
+private key files, as well as any you have specified with <code class="docutils literal notranslate"><span class="pre">-i</span></code> or a config
+file. This is fine, as long as one of the files mentioned is the one that
+matches the public key uploaded to SAFE.</p>
+<p>If you do not see <code class="docutils literal notranslate"><span class="pre">Authenticated</span> <span class="pre">with</span> <span class="pre">partial</span> <span class="pre">success</span></code> anywhere in the verbose
+output, consider the suggestions under <em>SSH key</em> above. If you do, but are
+unable to connect, consider the suggestions under <em>Password</em> above.</p>
+<p>The equivalent information can be obtained in PuTTY or MobaXterm by enabling
+all logging in settings.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data.html" class="btn btn-neutral float-right" title="Data management and transfer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, EPCC
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
