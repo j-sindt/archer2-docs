@@ -61,7 +61,7 @@ The following script will run a GROMACS MD job using 4 nodes
    #SBATCH --qos=standard
    
    # Load the relevant GROMACS module
-
+   module restore /etc/cray-pe.d/PrgEnv-gnu
    module load gromacs
 
    export OMP_NUM_THREADS=1 
